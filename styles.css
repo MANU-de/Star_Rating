@@ -1,0 +1,70 @@
+body {
+    background-color: #000;
+    color: #fff;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+  
+  .rate {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 2em;
+    margin: 0;
+      
+    &:has(select [value="1"]:checked) .star:nth-child(1),
+    &:has(select [value="2"]:checked) .star:nth-child(-n + 2),
+    &:has(select [value="3"]:checked) .star:nth-child(-n + 3),
+    &:has(select [value="4"]:checked) .star:nth-child(-n + 4),
+    &:has(select [value="5"]:checked) .star {
+      --starColor: gold;
+      transform: rotateX(180deg) rotateY(180deg) rotateZ(36deg);
+      transition: transform 2s var(--delay);
+    }
+  }
+  
+  select {
+    font: inherit;
+    padding: 1em;
+    color: #000;
+  }
+  
+  .stars {
+    display: flex;
+    gap: 1em;
+    font-size: min(3vw, 1em);
+    perspective: 50em;
+  }
+  
+  .star {
+    position: relative;
+    width: 5em;
+    height: 5em;
+    transform-style: preserve-3d;
+    animation: none;
+    --delay: calc(var(--i) * 0.1s);
+    
+    i {
+      position: absolute;
+      top: 50%;
+      width: 5em; height: 1em;
+      background-color: var(--starColor, #222);
+      background-image: linear-gradient(90deg, transparent, #000a);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transform: 
+        rotate(var(--angle))
+        translateY(-0.82em)
+        rotateX(var(--rx, 35deg));
+      transition: background-color 0.5s var(--delay);
+      
+      &:nth-child(5n + 1) { --angle: 0deg; }
+      &:nth-child(5n + 2) { --angle: 72deg; }
+      &:nth-child(5n + 3) { --angle: 144deg; }
+      &:nth-child(5n + 4) { --angle: 216deg; }
+      &:nth-child(5n + 5) { --angle: 288deg; }
+  
+      &:nth-child(n + 6) { --rx: -35deg; }
+    }
+  }
